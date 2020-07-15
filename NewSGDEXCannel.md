@@ -66,3 +66,61 @@ Esta función pasa los parámetros del main.brs y decide qué vista se muestra.
 Puedes mostrar una pantalla de inicio(vista) o crear una pantalla de enlace profundo (vista) pasando los parámetros correspondientes.
 
 La escena tiene un campo en la interfaz (ComponentController) que se utiliza para mostrar vistas y controlar flujos.
+
+# COMPONENT CONTROLLER
+Un componenteController es el componente que controla todas las vistas.
+
+### Interface
+
+**Fields**
+
+| **Field**      | **Description**                                           |
+| -------------- | --------------------------------------------------------- |
+| currentScreen  | La vista que se muestra actualmente                                                   |
+| shouldCloseLastScreenOnBack | Indica si la última pantalla de la pila debe cerrarse antes de que salga el canal |
+
+Manipule esta pantalla si el canal necesita implementar enlaces profundos
+o, un cuadro de confirmación cuando el usuario presione back en la pantalla o vista principal.
+
+### Function interface
+
+| **Function** | **Use**                             |
+| ------------ | ----------------------------------- |
+| show         | Se usa para agregar una nueva vista a la pila |
+
+# CREANDO Y MOSTRANDO NUESTRA PRIMERA VISTA 
+To show the first view, the developer needs to create the view, add content to it, and then display it.
+
+#### Example
+
+In /components/mainScene.brs, add the following to indicate the show(args) function:
+
+    sub Show(args as Object)
+        m.grid = CreateObject("roSGNode", "GridView")   
+        m.grid.ObserveField("rowItemSelected", "OnGridItemSelected")  
+
+        'Configurar la interfaz de usuario de la vista   
+        m.grid.SetFields({        
+            style: "standard"        
+            posterShape: "16x9"      
+        })
+        
+        ' Este es el contenido raíz que describe cómo llenar el resto de las filas
+        content = CreateObject("roSGNode", "ContentNode")
+        'Se agrega un manejador de configuracion, indicando que este sera la raiz
+        content.AddFields({
+            HandlerConfigGrid: {
+            name: "CGRoot"
+            fields : { param : "123" }
+            }
+        })
+        'Se le asigna a la vista
+        m.grid.content = content
+    
+        'Activa un trabajo para mostrar la vista
+        m.top.ComponentController.CallFunc("show", {
+            view: m.grid
+        })
+    end sub
+
+> The above code creates a simple grid view and displays it.
