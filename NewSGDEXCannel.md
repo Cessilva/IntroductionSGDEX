@@ -220,3 +220,92 @@ Content getter proporciona una lista predefinida de interfaces:
 </tr>
 </tbody>
 </table>
+
+### Implementing Content Getter (Creacion de componente CGRoot)
+
+To implement a Content Getter, create a component and extend it from ContentHandler.
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    
+    <component name="CGRoot" extends="ContentHandler" xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+    
+        <script type="text/brightscript" uri="pkg:/components/Content/CGRoot.brs" />
+    
+    </component>
+
+Content Getter implements only one required function GetContent() that
+does not return anything:
+
+    sub GetContent()
+    
+        'Esta es sólo una muestra. Por lo general, el feed se recupera de una url usando roUrlTransfer
+        'De una API que nos proporciona el contenido
+
+        feed = ReadAsciiFile("pkg:/components/content/feed.json")
+
+        if feed.Len() > 0
+            json = ParseJson(feed)
+            if json <> invalid AND json.rows <> invalid AND json.rows.Count() > 0
+                rootChildren = {
+                    children: []
+                }
+ 
+                for each row in json.rows
+                    if row.items <> invalid
+                        rowAA = {
+                        children: []
+                        }
+    
+                        for childIndex = 0 to 3
+                            for each item in row.items
+                                rowAA.children.Push(itemNode)
+                            end for
+                        end for
+                        
+                        rowAA.Append({ title: row.title })
+    
+                        rootChildren.children.Push(rowAA)
+                    end if
+                end for
+    
+                m.top.content.Update(rootChildren)
+            end if
+        end if
+    end sub
+
+> **Note:** De acuerdo con las mejores prácticas de SceneGraph, se sugiere utilizar:
+>  
+>    m.top.content.Update(rootChildren)
+>    
+>Esto elimina múltiples encuentros entre el hilo de renderizado y el nodo de la tarea.
+
+
+####   Contents of the JSON file
+
+Creamos un archivo JSON en "pkg:/components/content/feed.json", con los siguientes datos:
+    {
+        "rows": [{
+            "title": "ROW 1",
+    
+            "items": [{
+                    "hdPosterUrl": "poster_url"
+                },{
+                    "hdPosterUrl": "poster_url"
+                },{
+                    "hdPosterUrl": "poster_url"
+                },{
+                    "hdPosterUrl": "poster_url"
+            }]
+        },{
+            "title": "ROW 2",
+            "items": [{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+            }]
+        }]
+    }

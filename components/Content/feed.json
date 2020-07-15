@@ -1,0 +1,26 @@
+{
+    "rows": [{
+        "title": "ROW 1",
+
+        "items": [{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+            },{
+                "hdPosterUrl": "poster_url"
+        }]
+    },{
+        "title": "ROW 2",
+        "items": [{
+            "hdPosterUrl": "poster_url"
+        },{
+            "hdPosterUrl": "poster_url"
+        },{
+            "hdPosterUrl": "poster_url"
+        },{
+            "hdPosterUrl": "poster_url"
+        }]
+    }]
+}
