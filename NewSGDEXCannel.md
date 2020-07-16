@@ -283,6 +283,7 @@ does not return anything:
 ####   Contents of the JSON file
 
 Creamos un archivo JSON en "pkg:/components/content/feed.json", con los siguientes datos:
+
     {
         "rows": [{
             "title": "ROW 1",
@@ -309,3 +310,58 @@ Creamos un archivo JSON en "pkg:/components/content/feed.json", con los siguient
             }]
         }]
     }
+
+## ABRIENDO LA SIGUIENTE VISTA 
+
+Para abrir una nueva vista para una determinada acción, use el mismo mecanismo para
+crear y llenar la vista.
+
+Por ejemplo, abrir una pantalla de detalles tras una seleccion del grid y suponiendo que se haya ejecutado lo siguiente en el mainScene.brs:
+
+    m.grid.ObserveField("rowItemSelected", "OnGridItemSelected")
+
+usa:
+
+    sub OnGridItemSelected(event as Object)
+    
+        grid = event.GetRoSGNode()
+        selectedIndex = event.getdata()
+        rowContent = grid.content.getChild(selectedIndex[0])
+    
+        detailsScreen = ShowDetailsScreen(rowContent, selectedIndex[1])
+        detailsScreen.ObserveField("wasClosed", "OnDetailsWasClosed")
+    end sub
+
+
+## DETALLES DE LA VISTA 
+
+Agrega la funcion ShowDetailsScreen agregando /components/DetailsScreenLogic.brs con el siguiente contenido:   
+
+    function ShowDetailsScreen(content, index)
+        details = CreateObject("roSGNode", "DetailsView")
+        details.content = content
+        details.jumpToItem = index
+        details.ObserveField("currentItem", "OnDetailsContentSet")
+        details.ObserveField("buttonSelected", "OnButtonSelected")
+        'Triggers a job to show the view
+        m.top.ComponentController.callFunc("show", {
+            view: details
+        })
+        return details
+    end function
+
+El código anterior crea una nueva vista de detalles y pasa la fila de la cuadrícula como
+contenido para más detalles. También usa jumpToItem para establecer el índice de inicio.
+
+Agrega al mainScene.xml el script para que reconozca la funcion:
+
+    <?xml version="1.0" encoding="utf-8" ?>
+    <component name="mainScene" extends="BaseScene" >
+        <script type="text/brightscript" uri="pkg:/components/mainScene.brs" />
+        <script type="text/brightscript" uri="pkg:/components/DetailsScreenLogic.brs" />
+    </component>
+
+Si el desarrollador no quiere pasar una lista de elementos sino solo uno
+artículo, pueden usar el fragmento a continuación:
+
+

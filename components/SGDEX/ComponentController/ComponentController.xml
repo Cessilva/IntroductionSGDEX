@@ -19,25 +19,19 @@
 <component name="ComponentController" extends="Group" xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
     <interface>
         <!-- @Public -->
-        <!--  
-            holds the reference to view that is currently shown.
-            Can be used for checking in onkeyEvent
-         -->
+        <!-- Holds the reference to view that is currently shown.
+            Can be used for checking in onkeyEvent-->
         <field id="currentView" type="node" />
-
         <!-- @Public -->
         <!-- If developer set this flag channel closes when press back or set close=true on last view -->
         <field id="allowCloseChannelOnLastView" type="boolean" value="true" alwaysNotify="true" />
-
         <!-- @Public -->
         <!-- If developer set this flag the last View will be closed and developer can open another in wasClosed callback  -->
         <field id="allowCloseLastViewOnBack" type="boolean" value="true" alwaysNotify="true" />
-
         <!-- @Public -->
         <!--WRITE-ONLY. Adds new stack assuming given value as new stack ID and makes it active. 
             If there is already stack with such ID (e.g. "default" which always exists) it will become active and a new stack is not added.-->
         <field id="addStack" type="string" value="" alwaysNotify="true" />
-
         <!-- @Public -->
         <!--WRITE-ONLY. Accepts stack ID. 
             If there is a stack with such ID, it gets removed from ComponentController. 

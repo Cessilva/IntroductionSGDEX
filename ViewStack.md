@@ -20,16 +20,16 @@ ViewStack establece el foco a la vista implementando:view.setFocus(true).
 La vista implementa el manejo del foco de la siguiente manera:</h1>
 
 
-sub init()
-    m.viewThatHasFocus = m.top.findNode("viewThatHasFocus")
-    m.top.observeField("focusedChild","OnFocusChildChange")
-end sub
+    sub init()
+        m.viewThatHasFocus = m.top.findNode("viewThatHasFocus")
+        m.top.observeField("focusedChild","OnFocusChildChange")
+    end sub
 
-sub OnFocusChildChange()
-    if m.top.isInFocusChain() and not m.viewThatHasFocus.hasFocus() then
-       m.viewThatHasFocus.setFocus(true)
-    end if
-end sub
+    sub OnFocusChildChange()
+        if m.top.isInFocusChain() and not m.viewThatHasFocus.hasFocus() then
+        m.viewThatHasFocus.setFocus(true)
+        end if
+    end sub
 
 <h1>Nota:No establezca el foco en la vista antes de agregarlo a ViewStack, ya que establecerá el foco en una vista anterior</h1>
 
@@ -37,39 +37,39 @@ end sub
 # Abriendo una nueva vista 
 <h1>Para agregar (abrir) una nueva vista a la pila, use:</h1>
 
-sub Show(args)
- 
-    homeGrid = CreateObject("roSGNode", "GridView")
-    homeGrid.content = GetContentNodeForHome() ' implemented by user
+    sub Show(args)
     
-    'This will add your view to stack
-    m.top.ComponentController.callFunc("show", {
-        view: homeGrid
-    })
-end sub
+        homeGrid = CreateObject("roSGNode", "GridView")
+        homeGrid.content = GetContentNodeForHome() ' implemented by user
+        
+        'This will add your view to stack
+        m.top.ComponentController.callFunc("show", {
+            view: homeGrid
+        })
+    end sub
 
 # Recibiendo un evento cuando la vista está cerrada
 <h1>Si desea recibir una notificación cuando la vista se cierra manualmente o cuando el usuario ha presionado hacia atrás (observeField wasClosed), use lo siguiente:</h1>
 
 
-sub onShowLoginPage()
-    loginView = CreateObject("roSGNode", "MyLoginView")
-    loginView.observeField("wasClosed", "onLoginFinished")
+    sub onShowLoginPage()
+        loginView = CreateObject("roSGNode", "MyLoginView")
+        loginView.observeField("wasClosed", "onLoginFinished")
 
-    'This will add your view to stack
-    m.top.ComponentController.callFunc("show", {
-        view: loginView
-    })
-end sub
- 
-sub onLoginFinished(event as Object)
-    loginView = event.getRosgNode()
-    if loginView.isSuccess then
-       ShowVideoPlayer()
-    else
-        'do your logic
-    end if
-end sub
+        'This will add your view to stack
+        m.top.ComponentController.callFunc("show", {
+            view: loginView
+        })
+    end sub
+    
+    sub onLoginFinished(event as Object)
+        loginView = event.getRosgNode()
+        if loginView.isSuccess then
+        ShowVideoPlayer()
+        else
+            'do your logic
+        end if
+    end sub
 
 # Closing a view manually
 <h1>Para cerrar una vista manualmente, usa el field de close de la vista. Esto es útil cuando el canal necesita mostrar la siguiente vista después de un inicio de sesión exitoso.
