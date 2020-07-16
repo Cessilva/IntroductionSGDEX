@@ -1,23 +1,12 @@
-function ShowDetailsScreen(content)
- 
-    details = CreateObject("roSGNode", "DetailsView")
- 
-    for each child in content.getChildren(-1, 0)
- 
-        'Tells details view which content getter is responsible for getting the content
- 
-        child.HandlerConfigDetails = {
-            name: "GetDetailsContentConfig"
-        }
- 
-    end for
- 
-    details.content = content
- 
-    'this will trigger job to show this screen
- 
-    m.top.ComponentController.callFunc("show", {
-        view: details
-    })
-    return details
-end function
+' function ShowDetailsScreen(content, index)
+'         details = CreateObject("roSGNode", "DetailsView")
+'         details.content = content
+'         details.jumpToItem = index
+'         details.ObserveField("currentItem", "OnDetailsContentSet")
+'         details.ObserveField("buttonSelected", "OnButtonSelected")
+'         'Triggers a job to show the view
+'         m.top.ComponentController.callFunc("show", {
+'             view: details
+'         })
+'         return details
+'     end function

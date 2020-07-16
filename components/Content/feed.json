@@ -1,26 +1,37 @@
 {
     "rows": [{
-        "title": "ROW 1",
-
+        "title": "Peliculas",
         "items": [{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 1",
+                "description":"kjdlskhfkdsjgñldsjgkdljsfgkdf vjshglfdkg trgkntrgjr fgkrtjg day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 2",
+                "description":"With the Twitch channel, you can watch the rkjgeljfgmost popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 3",
+                "description":"ergkWith the Twitch channel, you can watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 4",
+                "description":"With the Twitch channel, you canvfkjbgkfjghbdfukhgf watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
         }]
     },{
-        "title": "ROW 2",
+        "title": "Series",
         "items": [{
-            "hdPosterUrl": "poster_url"
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 1"
         },{
-            "hdPosterUrl": "poster_url"
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 2"
         },{
-            "hdPosterUrl": "poster_url"
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 3"
         },{
-            "hdPosterUrl": "poster_url"
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 4"
         }]
     }]
 }

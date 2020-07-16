@@ -243,34 +243,30 @@ does not return anything:
 
         feed = ReadAsciiFile("pkg:/components/content/feed.json")
 
+        ' Now it is our job to parse the data. 
+        ' In this sample we are dividing the content into two Categories:movies and series. 
         if feed.Len() > 0
             json = ParseJson(feed)
-            if json <> invalid AND json.rows <> invalid AND json.rows.Count() > 0
+            if json <> invalid  AND json.rows <> invalid AND json.rows.Count() > 0
                 rootChildren = {
                     children: []
                 }
- 
                 for each row in json.rows
                     if row.items <> invalid
                         rowAA = {
                         children: []
                         }
-    
-                        for childIndex = 0 to 3
-                            for each item in row.items
-                                rowAA.children.Push(itemNode)
-                            end for
+                        for each item in row.items
+                            rowAA.children.Push(item)
                         end for
-                        
-                        rowAA.Append({ title: row.title })
-    
+
+                        rowAA.Append({ title: row.title})
                         rootChildren.children.Push(rowAA)
                     end if
                 end for
-    
                 m.top.content.Update(rootChildren)
             end if
-        end if
+        end if       
     end sub
 
 > **Note:** De acuerdo con las mejores prácticas de SceneGraph, se sugiere utilizar:
@@ -284,32 +280,43 @@ does not return anything:
 
 Creamos un archivo JSON en "pkg:/components/content/feed.json", con los siguientes datos:
 
-    {
-        "rows": [{
-            "title": "ROW 1",
-    
-            "items": [{
-                    "hdPosterUrl": "poster_url"
-                },{
-                    "hdPosterUrl": "poster_url"
-                },{
-                    "hdPosterUrl": "poster_url"
-                },{
-                    "hdPosterUrl": "poster_url"
-            }]
-        },{
-            "title": "ROW 2",
-            "items": [{
-                "hdPosterUrl": "poster_url"
+{
+    "rows": [{
+        "title": "Peliculas",
+        "items": [{
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 1",
+                "description":"kjdlskhfkdsjgñldsjgkdljsfgkdf vjshglfdkg trgkntrgjr fgkrtjg day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 2",
+                "description":"With the Twitch channel, you can watch the rkjgeljfgmost popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 3",
+                "description":"ergkWith the Twitch channel, you can watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
             },{
-                "hdPosterUrl": "poster_url"
-            }]
+                "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+                "title":"Live Gaming 4",
+                "description":"With the Twitch channel, you canvfkjbgkfjghbdfukhgf watch the most popular broadcasts of the day, browse live broadcasts by the games you love and follow your favorite Twitch broadcasters."
         }]
-    }
+    },{
+        "title": "Series",
+        "items": [{
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 1"
+        },{
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 2"
+        },{
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 3"
+        },{
+            "hdPosterUrl": "https://blog.roku.com/developer/files/2016/10/twitch-poster-artwork.png",
+            "title":"Live Gaming SERIE 4"
+        }]
+    }]
+}
 
 ## ABRIENDO LA SIGUIENTE VISTA 
 
