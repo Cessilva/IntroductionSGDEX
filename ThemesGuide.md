@@ -53,8 +53,22 @@ Estableciendo en DetailsScreenLogic.brs otro tema, aseguramos que todos menos de
         details.theme = {
         backgroundColor: "#FF0000"
     }
-    
+
 > Nota: estos temas no se aplican a elementos NonSGDEX
 
+# Updating theme attributes
+The channel might need to update their branding on the current view or next view when a user takes an action. For example, when a user logs in to the channel, the logo might be changed. In such cases, the best approach is to update just one field; baseScene and SGDEX views have updateTheme field for such instances. The developer can use it to change/set any theme attribute.
 
+UpdateTheme has the same syntax as theme.
+
+For instance, if the overhang logo needs to be changed for the all channels after login, use the code below:
    
+    sub OnLoginSuccess()
+        scene = m.top.getScene()
+        scene.updateTheme = {
+
+            global: {
+                OverhangLogoUri: "new logo url"
+            }
+        }
+end sub 
