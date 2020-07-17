@@ -67,7 +67,6 @@ Puedes mostrar una pantalla de inicio(vista) o crear una pantalla de enlace prof
 
 La escena tiene un campo en la interfaz (ComponentController) que se utiliza para mostrar vistas y controlar flujos.
 
-# COMPONENT CONTROLLER
 Un componenteController es el componente que controla todas las vistas.
 
 ### Interface
@@ -95,32 +94,33 @@ To show the first view, the developer needs to create the view, add content to i
 
 In /components/mainScene.brs, add the following to indicate the show(args) function:
 
+    
     sub Show(args as Object)
-        m.grid = CreateObject("roSGNode", "GridView")   
-        m.grid.ObserveField("rowItemSelected", "OnGridItemSelected")  
-
-        'Configurar la interfaz de usuario de la vista   
-        m.grid.SetFields({        
-            style: "standard"        
-            posterShape: "16x9"      
+    'In this we first create a grid view object and set a few fields to fit our content.
+        m.grid = CreateObject("roSGNode", "GridView")
+        m.grid.SetFields({
+        style: "standard"
+        posterShape: "16x9"
         })
-        
-        ' Este es el contenido raíz que describe cómo llenar el resto de las filas
+    'we create a ContentNode and add a content handler to it in order to get and parse the content
         content = CreateObject("roSGNode", "ContentNode")
-        'Se agrega un manejador de configuracion, indicando que este sera la raiz
         content.AddFields({
             HandlerConfigGrid: {
-            name: "CGRoot"
-            fields : { param : "123" }
+                name: "CGRoot"
             }
         })
-        'Se le asigna a la vista
+    'add the ContentNode to the grid.
         m.grid.content = content
-    
-        'Activa un trabajo para mostrar la vista
+    'Next we set up observers for what navigating the grid.
+        m.grid.ObserveField("rowItemSelected", "OnGridItemSelected")
+    'Finally, we display the grid. When the grid gets displayed, its
+    'content handler will be invoked. Now, let’s setup the content handler.
         m.top.ComponentController.CallFunc("show", {
-            view: m.grid
+        view: m.grid
         })
+        
+        'Buena programacion 
+        m.top.signalBeacon("AppLaunchComplete")
     end sub
 
 > The above code creates a simple grid view and displays it.
@@ -155,7 +155,7 @@ Si el desarrollador no tiene contenido para el grid, use HandlerConfigGrid que d
     })
     m.grid.content = content
 
-> En este momento nos va a salir un error puesto que no existe el componente CGRoot , por loq ue lo crearemos a continuacion
+> En este momento nos va a salir un error puesto que no existe el componente CGRoot , por lo que lo crearemos a continuacion
 > Aparece un mensaje similar a este:
 > BRIGHTSCRIPT: ERROR: roSGNode: Failed to create roSGNode with type CGRoot: pkg:/components/SGDEX/Scenes/BaseScene.brs(59)
 
