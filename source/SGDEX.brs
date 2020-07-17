@@ -18,7 +18,6 @@ sub StartSGDEXChannel(componentName, args)
     screen.Show()
     scene.ObserveField("exitChannel", m.port)
     scene.launch_args = args
-    
     ' create roInput context for handling roInputEvent messages
     input = CreateObject("roInput")
     input.setMessagePort(m.port)

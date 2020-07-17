@@ -1,5 +1,8 @@
 function ShowDetailsScreen(content, index)
-        details = CreateObject("roSGNode", "DetailsView")
+         details = CreateObject("roSGNode", "DetailsView")
+        details.theme = {
+        backgroundColor: "#FF0000"
+        }
         details.content = content
         details.jumpToItem = index
         details.ObserveField("currentItem", "OnDetailsContentSet")
