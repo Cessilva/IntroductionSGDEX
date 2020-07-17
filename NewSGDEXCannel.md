@@ -371,4 +371,11 @@ Agrega al mainScene.xml el script para que reconozca la funcion:
 Si el desarrollador no quiere pasar una lista de elementos sino solo uno
 artículo, pueden usar el fragmento a continuación:
 
+    details.content = content.getChild(index)
+    
+    'Tells details screen that only one item should be visible
+    
+    details.isContentList = false
+    
+    'isContentList – Informs details view that this is a proper item and can be rendered such that no extra items are loaded
 

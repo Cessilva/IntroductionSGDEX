@@ -29,13 +29,13 @@ sub Show(args as Object)
 end sub
 
 
-' sub OnGridItemSelected(event as Object)
-'     grid = event.GetRoSGNode()
-'     selectedIndex = event.getdata()
-'     rowContent = grid.content.getChild(selectedIndex[0])
-'     'Le estamos pasando  el primer hijo,y la segunda fila segun yo 
-'     detailsScreen = ShowDetailsScreen(rowContent, selectedIndex[1])
-'     detailsScreen.ObserveField("wasClosed", "OnDetailsWasClosed")
-' end sub
+sub OnGridItemSelected(event as Object)
+    grid = event.GetRoSGNode()
+    selectedIndex = event.getdata()
+    rowContent = grid.content.getChild(selectedIndex[0])
+    'Le estamos pasando  el primer hijo,y la segunda fila segun yo 
+    detailsScreen = ShowDetailsScreen(rowContent, selectedIndex[1])
+    detailsScreen.ObserveField("wasClosed", "OnDetailsWasClosed")
+end sub
 
 
