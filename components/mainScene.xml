@@ -2,4 +2,5 @@
 <component name="mainScene" extends="BaseScene" >
     <script type="text/brightscript" uri="pkg:/components/mainScene.brs" />
 	<script type="text/brightscript" uri="pkg:/components/DetailsScreenLogic.brs" />
+    <script type="text/brightscript" uri="pkg:/components/CustomViewLogic.brs" />
 </component>

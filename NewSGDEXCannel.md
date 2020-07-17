@@ -350,6 +350,7 @@ Agrega la funcion ShowDetailsScreen agregando /components/DetailsScreenLogic.brs
         details.jumpToItem = index
         details.ObserveField("currentItem", "OnDetailsContentSet")
         details.ObserveField("buttonSelected", "OnButtonSelected")
+
         'Triggers a job to show the view
         m.top.ComponentController.callFunc("show", {
             view: details
@@ -379,3 +380,105 @@ artículo, pueden usar el fragmento a continuación:
     
     'isContentList – Informs details view that this is a proper item and can be rendered such that no extra items are loaded
 
+# AGREGANDO UN BOTON 
+We begin by creating an DetailsView and observing the content and buttonSelected Field.
+    details = CreateObject("roSGNode", "DetailsView")
+    details.ObserveField("content", "OnDetailsContentSet")
+    details.ObserveField("buttonSelected", "OnButtonSelected")
+
+Agregamos el contenido del boton :
+
+    sub OnDetailsContentSet(event as Object)
+        btnsContent = CreateObject("roSGNode", "ContentNode")
+        btnsContent.Update({ children: [{ title: "Play", id: "play" }] })
+        details = event.GetRoSGNode()
+        details.buttons = btnsContent
+    end sub
+
+Now let’s create the button observer. You get the context like you did before and get the content of the button in a similar way
+
+    sub OnButtonSelected(event as Object)
+        details = event.GetRoSGNode()
+        selectedButton = details.buttons.GetChild(event.GetData())
+       
+    end if
+
+En este momento nosotros tendremos un boton que nos pueda direccionar a una vista que no sea de tipo SGDEX 
+
+## Opening non-SGDEX view
+
+SGDEX no se limita a usar solo vistas SGDEX; el canal puede mostrar su propia vista y observar sus campos.
+
+To open a non-SGDEX view, create, and populate interface fields, set
+observers and call:
+Para abrir una vista que no sea SGDEX, crear y completa los campos de interfaz, establezca
+observadores y call:
+
+~~~~
+ m.top.ComponentController.callFunc("show", {
+        view: yourViewNode
+    })
+~~~~
+
+Esto oculta la vista actual (si existe) y muestra la vista que no es SGDEX.
+
+**Note:** Component controller establece el foco en tu vista, asi que tu vista 
+debe implementar un manejo de enfoque adecuado.
+
+**Example**
+
+~~~~
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<component name="CustomView" extends="Group" xsi:noNamespaceSchemaLocation="https://devtools.web.roku.com/schema/RokuSceneGraph.xsd">
+    <script type = "text/brightscript" uri="pkg:/components/customView.brs"/ >
+    <children>
+        <Group id="container">
+            <Button id="btn" text="Push Me"/>
+        </Group>
+    </children>
+</component>
+~~~~
+
+In /components/NonSGDEX/CustomView/CustomView.brs", add:
+
+~~~~
+    function init() as void
+        m.btn = m.top.findNode("btn")
+        m.top.observeField("focusedChild", "OnChildFocused")
+    end function
+ 
+    sub OnChildFocused()
+        if m.top.isInFocusChain() and not m.btn.hasFocus() then
+            m.btn.setFocus(true)
+        end if
+    end sub
+  ~~~~
+
+Para poder usarla debemos hacer uso de un manejador de logica como en el caso de DetailsScreenLogic.brs al cual llamaremos CustomViewLogic.brs
+
+
+
+
+
+Whenever the view receives focus, it should be checked if it's in the
+focus chain and the node unfocused.
+
+Focus handling is important as component controller sets focus to
+a non-SGDEX view in two cases:
+
+  - The view is just shown
+
+  - The view is restored after top view was closed
+
+Component Controller is responsible for closing this view when the back
+button is pressed.
+
+If the view needs to be closed manually, a new field called "close"
+should be added to the view.
+
+By setting yourView.close = true, the developer can close the current
+view and the previous view is opened.
+
+
+###### Copyright (c) 2018 Roku, Inc. All rights reserved.
