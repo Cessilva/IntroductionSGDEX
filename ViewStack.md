@@ -38,7 +38,6 @@ La vista implementa el manejo del foco de la siguiente manera:</h1>
 <h1>Para agregar (abrir) una nueva vista a la pila, use:</h1>
 
     sub Show(args)
-    
         homeGrid = CreateObject("roSGNode", "GridView")
         homeGrid.content = GetContentNodeForHome() ' implemented by user
         

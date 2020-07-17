@@ -458,8 +458,25 @@ In /components/NonSGDEX/CustomView/CustomView.brs", add:
 Para poder usarla debemos hacer uso de un manejador de logica como en el caso de DetailsScreenLogic.brs al cual llamaremos CustomViewLogic.brs
 
 
+Agregarla al mainScene:
+~~~~
+    <?xml version="1.0" encoding="utf-8" ?>
+    <component name="mainScene" extends="BaseScene" >
+        <script type="text/brightscript" uri="pkg:/components/mainScene.brs" />
+        <script type="text/brightscript" uri="pkg:/components/DetailsScreenLogic.brs" />
+        <script type="text/brightscript" uri="pkg:/components/CustomViewLogic.brs" />
+    </component>
+~~~~
 
+y llamarla desde el boton:
 
+~~~~
+sub OnButtonSelected(event as Object)
+        details = event.GetRoSGNode()
+        selectedButton = details.buttons.GetChild(event.GetData())
+        ShowCustomView(selectedButton)
+end sub 
+~~~~
 
 Whenever the view receives focus, it should be checked if it's in the
 focus chain and the node unfocused.

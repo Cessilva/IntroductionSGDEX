@@ -20,10 +20,12 @@ end sub
 sub OnButtonSelected(event as Object)
         details = event.GetRoSGNode()
         selectedButton = details.buttons.GetChild(event.GetData())
-        ShowCustomView(selectedButton)
-    '     "if selectedButton.id = "play"
-    '     OpenVideoPlayer(details.content, details.itemFocused, details.isContentList)
-    ' else if selectedButton.id = "episodes"
-    '     ShowEpisodePickerView(details.currentItem.seasons)
-    ' end if"
+        if selectedButton.id = "play"
+            if details.content.title <> invalid then
+                ShowCustomView(details.content.title)
+            end if
+        else
+            ' handle all other button presses
+        end if
+        
 end sub 
